@@ -1,0 +1,28 @@
+name: 'YC action'
+description: 'action for using Yandex Cloud cli'
+inputs:
+  token: # token for yc auth https://cloud.yandex.com/en/docs/cli/quickstart
+    description: 'token for auth in Yandex cloud'
+    required: true
+    default: ''
+  folder-id: # default yc folder-id
+    description: 'default folder id for yc cli'
+    required: false
+  cloud-id: # default yc cloud-id
+    description: 'default cloud id for yc cli'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - id: install-yc
+      run: |
+        curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+        export PATH=$PATH:${HOME}/yandex-cloud/bin
+      shell: bash
+    - id: configure yc
+      run: |
+        yc config set token ${{ inputs.token }}
+        yc config set folder-id ${{ inputs.folder-id }}
+        yc config set cloud-id ${{ inputs.cloud-id }}
+      shell: bash
+
