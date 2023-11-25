@@ -18,9 +18,6 @@ runs:
       run: |
         curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
         export PATH=$PATH:${HOME}/yandex-cloud/bin
-      shell: bash
-    - id: configure-yc
-      run: |
         yc config set token ${{ inputs.token }}
         yc config set folder-id ${{ inputs.folder-id }}
         yc config set cloud-id ${{ inputs.cloud-id }}
