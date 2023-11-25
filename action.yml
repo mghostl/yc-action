@@ -11,19 +11,7 @@ inputs:
   cloud-id: # default yc cloud-id
     description: 'default cloud id for yc cli'
     required: false
-  exec: # script to run in yc
-    description: "script for running with yc"
-    required: true
 runs:
-  using: "composite"
-  steps:
-    - id: install-yc
-      run: |
-        curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-        export PATH=$PATH:${HOME}/yandex-cloud/bin
-        yc config set token ${{ inputs.token }}
-        yc config set folder-id ${{ inputs.folder-id }}
-        yc config set cloud-id ${{ inputs.cloud-id }}
-        bash ${{ inputs.exec }}
-      shell: bash
+  using: 'node20'
+  main: 'index.js'
 
